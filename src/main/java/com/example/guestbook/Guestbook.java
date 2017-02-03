@@ -1,5 +1,5 @@
-/*
- * Copyright 2016 Google Inc. All Rights Reserved.
+/**
+ * Copyright 2014-2015 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package myapp;
+//[START all]
+package com.example.guestbook;
 
-import java.io.IOException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-public class DemoServlet extends HttpServlet {
-  @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException {
-    resp.setContentType("text/plain");
-    resp.getWriter().println("{ \"name\": \"World\" }");
-  }
+/**
+ * The @Entity tells Objectify about our entity.  We also register it in
+ * OfyHelper.java -- very important.
+ *
+ * This is never actually created, but gives a hint to Objectify about our Ancestor key.
+ */
+@Entity
+public class Guestbook {
+  @Id public String book;
 }
+//[END all]
