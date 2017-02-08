@@ -4,6 +4,8 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/google/appengine/appengine-api-1.0-sdk/1.9.49/appengine-api-1.0-sdk-1.9.49.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/com/google/appengine/appengine-api-1.0-sdk/1.9.49/appengine-api-1.0-sdk-1.9.49.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/appengine/appengine-api-1.0-sdk/1.9.49/appengine-api-1.0-sdk-1.9.49.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/appengine/appengine-api-1.0-sdk/1.9.49/appengine-api-1.0-sdk-1.9.49.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
