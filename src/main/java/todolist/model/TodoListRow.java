@@ -1,6 +1,7 @@
 package todolist.model;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 import java.util.Date;
 
@@ -10,12 +11,42 @@ import java.util.Date;
 
 @Entity
 public class TodoListRow {
-    String category;
-    String description;
-    boolean completed;
-    Date start;
-    Date end;
+    @Id public  long id;
+    public int level;
+    public String category;
+    public String description;
+    public boolean completed;
+    public Date start;
+    public Date end;
 
+    public TodoListRow() {
+    }
+
+    public TodoListRow(long id, int level, String category, String description, boolean completed, Date start, Date end) {
+        this.id = id;
+        this.level = level;
+        this.category = category;
+        this.description = description;
+        this.completed = completed;
+        this.start = start;
+        this.end = end;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public String getCategory() {
         return category;
@@ -60,7 +91,9 @@ public class TodoListRow {
     @Override
     public String toString() {
         return "TodoListRow{" +
-                "category='" + category + '\'' +
+                "id=" + id +
+                ", level=" + level +
+                ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", completed=" + completed +
                 ", start=" + start +
@@ -69,3 +102,4 @@ public class TodoListRow {
     }
 
 }
+

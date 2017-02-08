@@ -3,6 +3,7 @@ package todolist.objectify.model;
 import com.googlecode.objectify.ObjectifyService;
 import todolist.model.TodoList;
 import todolist.model.TodoListRow;
+import todolist.model.User;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -13,10 +14,10 @@ import javax.servlet.ServletContextListener;
 
 public class TodoListOfy implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
-        // This will be invoked as part of a warmup request, or the first user request if no warmup
-        // request.
-        ObjectifyService.register(TodoList.class);
+        // This will be invoked as part of a warmup request, or the first user request if no warmup request.
         ObjectifyService.register(TodoListRow.class);
+        ObjectifyService.register(TodoList.class);
+        ObjectifyService.register(User.class);
     }
 
     public void contextDestroyed(ServletContextEvent event) {

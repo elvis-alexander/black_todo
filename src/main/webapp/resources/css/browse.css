@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+
+html, body {
+  font-family: Roboto;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.text-medium {
+  font-size: 20px;
+}
+
+.text-large {
+  font-size: 40px;
+}
+
+.text-logo {
+  font-family: "Russo One", sans-serif;
+}

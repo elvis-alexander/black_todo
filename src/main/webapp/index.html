@@ -1,18 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
 
 <html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Hello App Engine</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta name="google-signin-client_id" content="525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com">
+      <script type="application/javascript" src="resources/js/index.js"></script>
+
+      <title>Todo List</title>
   </head>
 
   <body>
-    <h1>Hello App Engine!</h1>
+    <div id="index_container">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    </div>
   </body>
 </html>

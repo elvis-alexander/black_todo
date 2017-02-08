@@ -12,13 +12,29 @@ import java.util.List;
  */
 
 
-
 @Entity
 public class TodoList {
     @Id public Long id;
-    boolean privateTodo;
-    List<TodoListRow> rows = new ArrayList<>();
+    public boolean privateTodo;
+    public List<TodoListRow> rows = new ArrayList<>();
 
+    public TodoList() {
+
+    }
+
+    public TodoList(Long id, boolean privateTodo, List<TodoListRow> rows) {
+        this.id = id;
+        this.privateTodo = privateTodo;
+        this.rows = rows;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public boolean isPrivateTodo() {
         return privateTodo;
@@ -32,7 +48,7 @@ public class TodoList {
         return rows;
     }
 
-    public void setList(List<TodoListRow> rows) {
+    public void setRows(List<TodoListRow> rows) {
         this.rows = rows;
     }
 

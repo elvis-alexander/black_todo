@@ -4,7 +4,6 @@
 <html>
 
 <head>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
@@ -13,9 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>Add a list</title>
     <!-- my css/js this -->
-    <%--<spring:url value="/resources/css/create.css" var="mainCss" />--%>
     <%--<spring:url value="/resources/js/create.js" var="mainJs" />--%>
-    <%--<link href="${mainCss}" rel="stylesheet" />--%>
     <%--<script src="${mainJs}"></script>--%>
 
     <link href="/resources/css/create.css" rel="stylesheet">
