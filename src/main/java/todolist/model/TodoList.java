@@ -11,11 +11,12 @@ import java.util.ArrayList;
 
 @Entity
 public class TodoList {
-    @Id public Long id;
+    @Id private Long id;
     public boolean privateTodo;
-    public ArrayList<TodoListRow> rows = new ArrayList<>();
+    private ArrayList<TodoListRow> rows = new ArrayList<>();
 
     public TodoList() {}
+
 
     public TodoList(Long id, boolean privateTodo) {
         this(id, privateTodo, new ArrayList<TodoListRow>());

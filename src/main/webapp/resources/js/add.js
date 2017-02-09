@@ -161,7 +161,7 @@ function save_todolist() {
         success: function (msg) {
             //do something
             console.log('success redirecting');
-            window.location = '/todolist/browse';
+            window.location = '/todolist/mylists';
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);
