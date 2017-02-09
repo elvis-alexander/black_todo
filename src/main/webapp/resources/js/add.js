@@ -126,26 +126,30 @@ function save_todolist() {
         todoList["privateTodo"] = this.checked ? true : false;
     });
     todoList['rows'] = [];
+    var level = 0;
     $('table > tbody  > tr').each(function() {
         var current_row = {};
         var cols = this.cells;
-        current_row['category'] = cols[0].innerHTML;
-        current_row['description'] = cols[1].innerHTML;
         var start_date = cols[2];
         var end_date = cols[3];
         var checkbox = cols[4];
-        $(start_date).find('input').each(function() {
-            current_row['start'] = this.value;
-        });
 
-        $(end_date).find('input').each(function() {
-            current_row['end'] = this.value;
-        });
+        /* set level,category and description */
+        current_row['level'] = level++;
+        current_row['category'] = cols[0].innerHTML;
+        current_row['description'] = cols[1].innerHTML;
 
+        /* set completed field */
         $(checkbox).find('input').each(function() {
             current_row['completed'] = this.checked ? true : false;
         });
-
+        /* set start and end time */
+        $(start_date).find('input').each(function() {
+            current_row['start'] = this.value;
+        });
+        $(end_date).find('input').each(function() {
+            current_row['end'] = this.value;
+        });
         todoList['rows'].push(current_row);
     });
 
@@ -156,7 +160,8 @@ function save_todolist() {
         data: JSON.stringify(todoList),
         success: function (msg) {
             //do something
-            console.log('success');
+            console.log('success redirecting');
+            window.location = '/todolist/browse';
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

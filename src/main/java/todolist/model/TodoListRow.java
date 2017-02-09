@@ -1,42 +1,35 @@
 package todolist.model;
 
+import com.google.appengine.repackaged.com.google.api.client.util.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 import java.util.Date;
 
 /**
- * Created by kingfernandez on 2/7/17.
+ * Created by elvis on 2/7/17.
  */
 
 @Entity
 public class TodoListRow {
-    @Id public  long id;
-    public int level;
-    public String category;
-    public String description;
-    public boolean completed;
-    public Date start;
-    public Date end;
+    @Key @Id private Long id;
+    private int level;
+    private String category;
+    private String description;
+    private boolean completed;
+    private Date start;
+    private Date end;
+    private int todoListId;
+
 
     public TodoListRow() {
     }
 
-    public TodoListRow(long id, int level, String category, String description, boolean completed, Date start, Date end) {
-        this.id = id;
-        this.level = level;
-        this.category = category;
-        this.description = description;
-        this.completed = completed;
-        this.start = start;
-        this.end = end;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -88,6 +81,14 @@ public class TodoListRow {
         this.end = end;
     }
 
+    public int getTodoListId() {
+        return todoListId;
+    }
+
+    public void setTodoListId(int todoListId) {
+        this.todoListId = todoListId;
+    }
+
     @Override
     public String toString() {
         return "TodoListRow{" +
@@ -98,6 +99,7 @@ public class TodoListRow {
                 ", completed=" + completed +
                 ", start=" + start +
                 ", end=" + end +
+                ", todoListId=" + todoListId +
                 '}';
     }
 

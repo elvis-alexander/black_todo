@@ -10,7 +10,7 @@ function onSignIn(googleUser) {
     xhr.open('POST', '/todolist/signin');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
-        window.location.href = '/todolist/browse';
+        window.location.href = '/todolist/add';
     };
     xhr.send('idtoken=' + id_token);
 }

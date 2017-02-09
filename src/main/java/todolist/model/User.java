@@ -15,7 +15,7 @@ public class User {
     @Index @Id public String id;
     private String firstName;
     private String lastName;
-    private List<TodoList> todoListList = new ArrayList<TodoList>();
+    private ArrayList<TodoList> todoListList = new ArrayList<TodoList>();
 
     public User() {
     }
@@ -24,7 +24,7 @@ public class User {
         this(id, "", firstName, lastName, new ArrayList<TodoList>());
     }
 
-    public User(String id, String email, String firstName, String lastName, List<TodoList> todoListList) {
+    public User(String id, String email, String firstName, String lastName, ArrayList<TodoList> todoListList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,7 +59,7 @@ public class User {
         return todoListList;
     }
 
-    public void setTodoListList(List<TodoList> todoListList) {
+    public void setTodoListList(ArrayList<TodoList> todoListList) {
         this.todoListList = todoListList;
     }
 

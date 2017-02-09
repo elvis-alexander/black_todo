@@ -12,11 +12,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>Add a list</title>
     <!-- my css/js this -->
-    <%--<spring:url value="/resources/js/create.js" var="mainJs" />--%>
+    <%--<spring:url value="/resources/js/add.js" var="mainJs" />--%>
     <%--<script src="${mainJs}"></script>--%>
 
-    <link href="/resources/css/create.css" rel="stylesheet">
-    <script src="/resources/js/create.js"></script>
+    <link href="/resources/css/add.css" rel="stylesheet">
+    <script src="/resources/js/add.js"></script>
 
     <%--my css/js--%>
     <csrf disabled="true"/>

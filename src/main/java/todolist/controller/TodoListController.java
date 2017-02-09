@@ -6,23 +6,22 @@ import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oau
 import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.appengine.repackaged.com.google.api.client.json.jackson.JacksonFactory;
 import com.googlecode.objectify.ObjectifyService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import todolist.model.TodoList;
-import todolist.model.User;
+import todolist.model.TodoListRow;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 /**
  * Created by elvis on 2/6/17.
  */
-
-
 
 @Controller
 @RequestMapping("/todolist")
@@ -39,22 +38,18 @@ public class TodoListController {
                 .setAudience(Collections.singletonList("525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com"))
                 .build();
         GoogleIdToken.Payload payload = verifier.verify(idTokenString).getPayload();
-        // Print user identifier
         String userId = payload.getSubject();
-        List<User> users = ObjectifyService.ofy().load().type(User.class).list();
-        boolean exists = false;
-        for (User user : users) {
-            if (user.getId().equals(userId)) exists = true;
-        }
-        if(!exists) {
-            // save new user
-            System.out.println("-> saving new user");
-            User user = new User(userId, (String) payload.get("given_name"), (String) payload.get("family_name"));
-            ObjectifyService.ofy().save().entity(user).now();
-        } else System.out.println("-> user already exists");
-        System.out.println("userId -> " + userId);
-        // @TODO save their session
+
+        /* save to datastore */
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity user = new Entity("User", userId);
+        user.setProperty("firstName",  (String) payload.get("given_name"));
+        user.setProperty("lastName", (String)payload.get("family_name"));
+        ds.put(user);
+        /* User u = new User(userId, (String) payload.get("given_name"), (String) payload.get("family_name"));
+        ObjectifyService.ofy().save().entity(u).now(); // .load().type().id(.now()*/
     }
+
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
     public String getBrowseView() {
@@ -63,23 +58,34 @@ public class TodoListController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddTodoList() {
-        return "create";
+        return "add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String saveNewTodoList(@RequestBody TodoList todoList) {
-        System.out.println("->" + todoList);
+    public String saveNewTodoList(@RequestBody TodoList todoList) throws Exception {
         /* save to data store */
-
-        Entity entityTodoList = new Entity("TodoList");
-        entityTodoList.setProperty("privateTodo", todoList.isPrivateTodo());
-        // entityTodoList.setProperty("rows", todoList.getRows());
-        ObjectifyService.register(TodoList.class);
-        ObjectifyService.ofy().save().entity(entityTodoList).now();
-        // @Todo redirect to home page (view all public todo list)
-        return "create";
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        /*  */
+        Entity todoListEntity = new Entity("TodoList");
+        todoListEntity.setProperty("privateTodo", todoList.isPrivateTodo());
+        ds.put(todoListEntity);
+        /*  */
+        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
+        /*  */
+        for(int i = 0; i < todoList.getRows().size(); ++i) {
+            TodoListRow row = todoList.getRows().get(i);
+            Entity rowEntity = new Entity("TodoListRow");
+            rowEntity.setProperty("level", row.getLevel());
+            rowEntity.setProperty("category", row.getCategory());
+            rowEntity.setProperty("description", row.getDescription());
+            rowEntity.setProperty("completed", row.isCompleted());
+            rowEntity.setProperty("start", row.getStart());
+            rowEntity.setProperty("end", row.getEnd());
+            rowEntity.setProperty("todoListId", todoListKey);
+            ds.put(rowEntity);
+        }
+        return "add";
     }
-
 
 }
 
