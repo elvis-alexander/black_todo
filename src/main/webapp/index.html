@@ -2,23 +2,58 @@
 
 <html>
   <head>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <!-- Compiled and minified CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-      <!-- Compiled and minified JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <title>Todo List</title>
+
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="/resources/materialize/css/materialize.min.css">
+      <link rel="stylesheet" type="text/css" href="/resources/css/browse.css">
+
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
       <script src="https://apis.google.com/js/platform.js" async defer></script>
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <meta name="google-signin-client_id" content="525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com">
       <script type="application/javascript" src="resources/js/index.js"></script>
 
-      <title>Todo List</title>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta name="google-signin-client_id" content="525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com">
+
   </head>
 
   <body>
-    <div id="index_container">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
+    <div class="navbar-fixed z-depth-1">
+      <nav>
+          <div class="nav-wrapper light-blue accent-2">
+              <ul class="left">
+                  <li>
+                      <a class="grey lighten-2 text-large text-logo text-black" href="#">BLACK</a>
+                  </li>
+                  <li>
+                      <a class="grey darken-3 text-large text-logo text-white">TODO</a>
+                  </li>
+              </ul>
+              <ul class="right">
+              </ul>
+          </div>
+      </nav>
     </div>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col s3"></div>
+            <div class="col s5">
+
+                <div class="valign-wrapper" style="margin:300px;margin-right: 500px">
+                <!--<h5 class="valign">This should be vertically aligned</h5>-->
+                    <div class="valign">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s2"></div>
+        </div>
+    </div>
+
   </body>
 </html>
