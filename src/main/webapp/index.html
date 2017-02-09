@@ -18,42 +18,16 @@
 
   </head>
 
-  <body>
-
-    <div class="navbar-fixed z-depth-1">
-      <nav>
-          <div class="nav-wrapper light-blue accent-2">
-              <ul class="left">
-                  <li>
-                      <a class="grey lighten-2 text-large text-logo text-black" href="#">BLACK</a>
-                  </li>
-                  <li>
-                      <a class="grey darken-3 text-large text-logo text-white">TODO</a>
-                  </li>
-              </ul>
-              <ul class="right">
-              </ul>
+  <body class="grey lighten-4">
+  <div class="container valing-wrapper" style="margin-top: 10%">
+      <div class="row valign">
+          <div class="col s4 offset-s4 grey lighten-5 z-depth-2">
+              <div class="col s6 grey lighten-2 text-black center text-logo text-medium">BLACK</div>
+              <div class="col s6 grey darken-3 center text-white text-logo text-medium">TODO</div>
+              <div class="col s12">Make a todo list today.<div class="divider"></div></div>
+              <div class="col s12"><div class="g-signin2" data-onsuccess="onSignIn"></div></div>
           </div>
-      </nav>
-    </div>
-
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col s3"></div>
-            <div class="col s5">
-
-                <div class="valign-wrapper" style="margin:300px;margin-right: 500px">
-                <!--<h5 class="valign">This should be vertically aligned</h5>-->
-                    <div class="valign">
-                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2"></div>
-        </div>
-    </div>
-
+      </div>
+  </div>
   </body>
 </html>
