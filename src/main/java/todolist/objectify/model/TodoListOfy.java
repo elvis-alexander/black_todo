@@ -15,9 +15,9 @@ import javax.servlet.ServletContextListener;
 public class TodoListOfy implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         // This will be invoked as part of a warmup request, or the first user request if no warmup request.
-        ObjectifyService.register(TodoListRow.class);
-        ObjectifyService.register(TodoList.class);
-        ObjectifyService.register(User.class);
+//        ObjectifyService.register(TodoListRow.class);
+//        ObjectifyService.register(TodoList.class);
+//        ObjectifyService.register(User.class);
     }
 
     public void contextDestroyed(ServletContextEvent event) {

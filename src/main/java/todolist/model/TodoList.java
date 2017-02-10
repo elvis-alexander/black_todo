@@ -11,29 +11,18 @@ import java.util.ArrayList;
 
 @Entity
 public class TodoList {
-    @Id public Long id;
+    public @Id com.google.appengine.api.datastore.Key id;
     public String name;
     public boolean privateTodo;
     public ArrayList<TodoListRow> rows = new ArrayList<>();
 
     public TodoList() {}
 
-
-    public TodoList(Long id, boolean privateTodo) {
-        this(id, privateTodo, new ArrayList<TodoListRow>());
-    }
-
-    public TodoList(Long id, boolean privateTodo, ArrayList<TodoListRow> rows) {
-        this.id = id;
-        this.privateTodo = privateTodo;
-        this.rows = rows;
-    }
-
-    public Long getId() {
+    public com.google.appengine.api.datastore.Key getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(com.google.appengine.api.datastore.Key id) {
         this.id = id;
     }
 

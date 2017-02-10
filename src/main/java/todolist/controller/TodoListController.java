@@ -70,18 +70,20 @@ public class TodoListController {
         todoListEntity.setProperty("userId", request.getSession().getAttribute("userId"));
         ds.put(todoListEntity);
         /* retrieve todolist key */
-        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
+
+        Key todoListKey = todoListEntity.getKey();
+//        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
         /* save row's entities */
         for(int i = 0; i < todoList.getRows().size(); ++i) {
             TodoListRow row = todoList.getRows().get(i);
             Entity rowEntity = new Entity("TodoListRow");
+            rowEntity.setProperty("todoListId", todoListKey);
             rowEntity.setProperty("level", row.getLevel());
             rowEntity.setProperty("category", row.getCategory());
             rowEntity.setProperty("description", row.getDescription());
             rowEntity.setProperty("completed", row.isCompleted());
             rowEntity.setProperty("start", row.getStart());
             rowEntity.setProperty("end", row.getEnd());
-            rowEntity.setProperty("todoListId", todoListKey);
             ds.put(rowEntity);
         }
         return "success";
@@ -98,11 +100,12 @@ public class TodoListController {
         /* get all todolist from current user */
         ArrayList<TodoList> listOfTodos = new ArrayList<>();
         for (Entity todoListEntity : preparedQuery.asIterable()) {
-            Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
+            Key todoListKey = todoListEntity.getKey();
             Map<String, Object> properties = todoListEntity.getProperties();
             TodoList currTodo = new TodoList();
             currTodo.setPrivateTodo((Boolean) properties.get("privateTodo"));
             currTodo.setName((String) properties.get("name"));
+            currTodo.setId(todoListKey);
             query = new Query("TodoListRow");
             query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
             preparedQuery = ds.prepare(query);
@@ -122,6 +125,22 @@ public class TodoListController {
         }
         model.addAttribute("todoList", listOfTodos);
         return "mylists";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String getEditView(HttpServletRequest req) {
+
+        // select todolist entity with given id to load name and privacy
+
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        String todoKey = req.getParameter("todoId");
+        Query.Filter propertyFilter = new Query.FilterPredicate("TodoList", Query.FilterOperator.EQUAL, "ahNkZXZ-cHJvamVjdDEtMTU3OTA2chULEghUb2RvTGlzdBiAgICAgKWQCgw");
+        Query q = new Query("TodoList").setFilter(propertyFilter);
+        PreparedQuery p = ds.prepare(q);
+        System.out.println("->" + p.asIterable());
+        System.out.println("=>:" + p.asIterator().hasNext());
+
+        return"edit";
     }
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
