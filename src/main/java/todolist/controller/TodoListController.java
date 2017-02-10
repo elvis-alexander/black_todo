@@ -8,17 +8,13 @@ import com.google.appengine.repackaged.com.google.api.client.json.jackson.Jackso
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import todolist.model.TodoList;
 import todolist.model.TodoListRow;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -29,6 +25,7 @@ import java.util.Map;
  */
 
 @Controller
+@SessionAttributes("userId")
 @RequestMapping("/todolist")
 public class TodoListController {
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
@@ -56,7 +53,7 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String getAddTodoList() {
+    public String getAddTodoList(HttpServletRequest request) {
         return "add";
     }
 
@@ -95,6 +92,9 @@ public class TodoListController {
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
+
+        System.out.println("userId=> " + userId);
+
         PreparedQuery preparedQuery = ds.prepare(query);
         /* get all todolist from current user */
         ArrayList<TodoList> listOfTodos = new ArrayList<>();
@@ -165,13 +165,13 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
-    public String browseView() {
+    public String browseView(HttpServletRequest request) {
         return "browse";
     }
 
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
-    public String successView() {
+    public String successView(HttpServletRequest request) {
         return "success";
     }
 
