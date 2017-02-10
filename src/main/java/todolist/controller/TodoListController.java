@@ -92,9 +92,7 @@ public class TodoListController {
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
-
         System.out.println("userId=> " + userId);
-
         PreparedQuery preparedQuery = ds.prepare(query);
         /* get all todolist from current user */
         ArrayList<TodoList> listOfTodos = new ArrayList<>();
@@ -139,6 +137,7 @@ public class TodoListController {
         for (Entity todoListEntity : preparedQuery.asIterable()) {
             Key todoListKey = todoListEntity.getKey();
             if(todoListKey.toString().equals(todoKey)) {
+                model.addAttribute("id", todoListKey);
                 model.addAttribute("name", todoListEntity.getProperties().get("name"));
                 model.addAttribute("privateTodo", todoListEntity.getProperties().get("privateTodo"));
                 ArrayList<TodoListRow> rowArrayList = new ArrayList<>();
@@ -162,6 +161,14 @@ public class TodoListController {
             }
         }
         return"edit";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String postEdit(HttpServletRequest req, @RequestBody TodoList todoList) {
+        System.out.println("=>posting edit");
+        System.out.println(todoList.toString());
+
+        return "successedit";
     }
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)

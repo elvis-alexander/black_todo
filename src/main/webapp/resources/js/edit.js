@@ -163,6 +163,23 @@ function save_todolist() {
         todoList['rows'].push(current_row);
     });
 
+    $('#id_field').each(function () {
+        todoList['id'] = this.value;
+    });
+
+    var request = $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/todolist/edit',
+        data: JSON.stringify(todoList),
+        success: function (msg) {
+            console.log('success edited');
+            // window.location.href = '/todolist/success'
+        },
+        error: function (errormessage) {
+            console.log('ajax failure' + errormessage);
+        }
+    });
     console.log('todoList ' + JSON.stringify(todoList));
 }
 
