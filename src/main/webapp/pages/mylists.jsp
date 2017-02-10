@@ -53,17 +53,14 @@
                                 <c:forEach items="${currentTodo.rows}" var="curr_row">
                                     <li><c:out value="${curr_row.description}"></c:out></li>
                                 </c:forEach>
-                                <li><c:out value="${currentTodo.id}"></c:out></li>
                             </ol>
                         </div>
                         <form action="/todolist/edit" method="get">
                             <div class="card-action">
-
+                                <input type="hidden" value="${currentTodo.id}" name="todoId">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">View/Edit full todo list
                                     <i class="material-icons right">send</i>
                                 </button>
-                                <input name="todoId" value="<c:out value="${currentTodo.id}"></c:out>">
-
                             </div>
                         </form>
                     </div>

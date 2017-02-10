@@ -18,6 +18,7 @@ import todolist.model.TodoListRow;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -72,7 +73,6 @@ public class TodoListController {
         /* retrieve todolist key */
 
         Key todoListKey = todoListEntity.getKey();
-//        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
         /* save row's entities */
         for(int i = 0; i < todoList.getRows().size(); ++i) {
             TodoListRow row = todoList.getRows().get(i);
@@ -92,7 +92,6 @@ public class TodoListController {
     @RequestMapping(value = "/mylists", method = RequestMethod.GET)
     public String myListsView(HttpServletRequest request, Model model) {
         String userId = (String) request.getSession().getAttribute("userId");
-        System.out.println("=> " + userId);
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
@@ -128,18 +127,40 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEditView(HttpServletRequest req) {
-
+    public String getEditView(HttpServletRequest req, Model model) {
         // select todolist entity with given id to load name and privacy
-
-        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         String todoKey = req.getParameter("todoId");
-        Query.Filter propertyFilter = new Query.FilterPredicate("TodoList", Query.FilterOperator.EQUAL, "ahNkZXZ-cHJvamVjdDEtMTU3OTA2chULEghUb2RvTGlzdBiAgICAgKWQCgw");
-        Query q = new Query("TodoList").setFilter(propertyFilter);
-        PreparedQuery p = ds.prepare(q);
-        System.out.println("->" + p.asIterable());
-        System.out.println("=>:" + p.asIterator().hasNext());
-
+        String userId = (String) req.getSession().getAttribute("userId");
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("TodoList");
+        query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
+        PreparedQuery preparedQuery = ds.prepare(query);
+        /* get all todolist from current user */
+        for (Entity todoListEntity : preparedQuery.asIterable()) {
+            Key todoListKey = todoListEntity.getKey();
+            if(todoListKey.toString().equals(todoKey)) {
+                model.addAttribute("name", todoListEntity.getProperties().get("name"));
+                model.addAttribute("privateTodo", todoListEntity.getProperties().get("privateTodo"));
+                ArrayList<TodoListRow> rowArrayList = new ArrayList<>();
+                query = new Query("TodoListRow");
+                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
+                preparedQuery = ds.prepare(query);
+                for(Entity todoListRow : preparedQuery.asIterable()) {
+                    Map<String, Object> properties = todoListRow.getProperties();
+                    TodoListRow row = new TodoListRow();
+                    row.setLevel((Long)properties.get("level"));
+                    row.setCategory((String)properties.get("category"));
+                    row.setDescription((String)properties.get("description"));
+                    row.setCompleted((boolean)properties.get("completed"));
+                    row.setStart((Date)properties.get("start"));
+                    row.setEnd((Date)properties.get("end"));
+                    row.setTodoListId((Key)properties.get("todoListId"));
+                    rowArrayList.add(row);
+                }
+                model.addAttribute("rows", rowArrayList);
+                return "edit";
+            }
+        }
         return"edit";
     }
 
@@ -156,4 +177,3 @@ public class TodoListController {
 
 
 }
-
