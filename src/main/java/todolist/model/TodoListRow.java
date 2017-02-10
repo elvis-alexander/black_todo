@@ -13,13 +13,13 @@ import java.util.Date;
 @Entity
 public class TodoListRow {
     @Key @Id private Long id;
-    private int level;
-    private String category;
-    private String description;
-    private boolean completed;
-    private Date start;
-    private Date end;
-    private int todoListId;
+    public Long level;
+    public String category;
+    public String description;
+    public boolean completed;
+    public Date start;
+    public Date end;
+    public com.google.appengine.api.datastore.Key todoListId;
 
 
     public TodoListRow() {
@@ -33,11 +33,11 @@ public class TodoListRow {
         this.id = id;
     }
 
-    public int getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Long level) {
         this.level = level;
     }
 
@@ -81,11 +81,11 @@ public class TodoListRow {
         this.end = end;
     }
 
-    public int getTodoListId() {
+    public com.google.appengine.api.datastore.Key getTodoListId() {
         return todoListId;
     }
 
-    public void setTodoListId(int todoListId) {
+    public void setTodoListId(com.google.appengine.api.datastore.Key todoListId) {
         this.todoListId = todoListId;
     }
 

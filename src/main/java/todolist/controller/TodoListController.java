@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -74,19 +74,24 @@ public class TodoListController {
             Map<String, Object> properties = todoListEntity.getProperties();
             TodoList currTodo = new TodoList();
             currTodo.setPrivateTodo((Boolean) properties.get("privateTodo"));
-
             query = new Query("TodoListRow");
             query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
             preparedQuery = ds.prepare(query);
             for(Entity todoListRow : preparedQuery.asIterable()) {
-                System.out.println("=>" + todoListRow);
+                properties = todoListRow.getProperties();
+                TodoListRow currRow = new TodoListRow();
+                currRow.setLevel((Long)properties.get("level"));
+                currRow.setCategory((String)properties.get("category"));
+                currRow.setDescription((String)properties.get("description"));
+                currRow.setCompleted((boolean)properties.get("completed"));
+                currRow.setStart((Date)properties.get("start"));
+                currRow.setEnd((Date)properties.get("end"));
+                currRow.setTodoListId((Key)properties.get("todoListId"));
+                currTodo.getRows().add(currRow);
             }
-
             listOfTodos.add(currTodo);
         }
         model.addAttribute("todoList", listOfTodos);
-
-
         return "mylists";
     }
 

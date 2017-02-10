@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 @Entity
 public class TodoList {
-    @Id private Long id;
+    @Id public Long id;
     public boolean privateTodo;
-    private ArrayList<TodoListRow> rows = new ArrayList<>();
+    public ArrayList<TodoListRow> rows = new ArrayList<>();
 
     public TodoList() {}
 

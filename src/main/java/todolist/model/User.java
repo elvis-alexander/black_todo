@@ -13,9 +13,9 @@ import java.util.List;
 @Entity
 public class User {
     @Index @Id public String id;
-    private String firstName;
-    private String lastName;
-    private ArrayList<TodoList> todoListList = new ArrayList<TodoList>();
+    public String firstName;
+    public String lastName;
+    public ArrayList<TodoList> todoListList = new ArrayList<TodoList>();
 
     public User() {
     }
