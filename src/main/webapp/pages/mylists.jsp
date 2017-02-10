@@ -26,8 +26,9 @@
                     </li>
                 </ul>
                 <ul class="right">
-                    <li><a href="browse.html" class="left">Browse lists</a></li>
-                    <li class="active"><a href="mylists.html" class="left">My lists</a></li>
+                    <li><a href="/todolist/browse" class="left">Browse Todo's</a></li>
+                    <li class="active"><a href="/todolist/mylists" class="left">My Todo's</a></li>
+                    <li><a href="/todolist/add" class="left">Create Todo</a></li>
                     <li>
                         <a href="#">
                             <i class="material-icons left">input</i>Logout
@@ -44,8 +45,8 @@
                 <div class="col s4">
                     <div class="card grey darken-2">
                         <div class="card-content white-text">
-                            <%--<span class="text-medium">currentTodo.name</span>--%>
-                            <span class="text-medium">no name</span>
+                            <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
+                            <%--<span class="text-medium">no name</span>--%>
                             <div class="divider"></div>
                             <h6>Preview:</h6>
                             <ol>

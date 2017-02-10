@@ -30,8 +30,9 @@
                 </li>
             </ul>
             <ul class="right">
-                <li class="active"><a href="browse.html" class="left">Browse lists</a></li>
-                <li><a href="mylists.html" class="left">My lists</a></li>
+                <li><a href="/todolist/browse" class="left">Browse Todo's</a></li>
+                <li><a href="/todolist/mylists" class="left">My Todo's</a></li>
+                <li class="active"><a href="/todolist/add" class="left">Create Todo</a></li>
                 <li>
                     <a href="#">
                         <i class="material-icons left">input</i>Logout
@@ -51,8 +52,8 @@
 
         <h4>New Todo List</h4>
         <div class="input-field col s6" id="name_field">
-            <input placeholder="Enter Name Here" type="text" id="name">
-            <label for="name_field" id="name">TodoList Name</label>
+            <input placeholder="Enter Name Here" type="text" id="name_field">
+            <label for="name_field">TodoList Name</label>
         </div>
 
         <div class="col s1"></div>

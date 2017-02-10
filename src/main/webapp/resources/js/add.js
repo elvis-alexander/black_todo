@@ -161,6 +161,7 @@ function save_todolist() {
         success: function (msg) {
             //do something
             console.log('success');
+            window.location.href = '/todolist/success'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

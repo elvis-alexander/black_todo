@@ -54,13 +54,41 @@ public class TodoListController {
         ds.put(user);
     }
 
-    @RequestMapping(value = "/browse", method = RequestMethod.GET)
-    public String getBrowseView() {
-        return "browse";
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String getAddTodoList() {
+        return "add";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String addTodoList(HttpServletRequest request, @RequestBody TodoList todoList) throws Exception {
+        /* retrieve datastore */
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        /* save todolist entity */
+        Entity todoListEntity = new Entity("TodoList");
+        todoListEntity.setProperty("privateTodo", todoList.isPrivateTodo());
+        todoListEntity.setProperty("name", todoList.getName());
+        todoListEntity.setProperty("userId", request.getSession().getAttribute("userId"));
+        ds.put(todoListEntity);
+        /* retrieve todolist key */
+        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
+        /* save row's entities */
+        for(int i = 0; i < todoList.getRows().size(); ++i) {
+            TodoListRow row = todoList.getRows().get(i);
+            Entity rowEntity = new Entity("TodoListRow");
+            rowEntity.setProperty("level", row.getLevel());
+            rowEntity.setProperty("category", row.getCategory());
+            rowEntity.setProperty("description", row.getDescription());
+            rowEntity.setProperty("completed", row.isCompleted());
+            rowEntity.setProperty("start", row.getStart());
+            rowEntity.setProperty("end", row.getEnd());
+            rowEntity.setProperty("todoListId", todoListKey);
+            ds.put(rowEntity);
+        }
+        return "success";
     }
 
     @RequestMapping(value = "/mylists", method = RequestMethod.GET)
-    public String myLists(HttpServletRequest request, Model model) {
+    public String myListsView(HttpServletRequest request, Model model) {
         String userId = (String) request.getSession().getAttribute("userId");
         System.out.println("=> " + userId);
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
@@ -74,6 +102,7 @@ public class TodoListController {
             Map<String, Object> properties = todoListEntity.getProperties();
             TodoList currTodo = new TodoList();
             currTodo.setPrivateTodo((Boolean) properties.get("privateTodo"));
+            currTodo.setName((String) properties.get("name"));
             query = new Query("TodoListRow");
             query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
             preparedQuery = ds.prepare(query);
@@ -95,36 +124,17 @@ public class TodoListController {
         return "mylists";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String getAddTodoList() {
-        return "add";
+    @RequestMapping(value = "/browse", method = RequestMethod.GET)
+    public String browseView() {
+        return "browse";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String saveNewTodoList(HttpServletRequest request, @RequestBody TodoList todoList) throws Exception {
-        /* retrieve datastore */
-        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-        /* save todolist entity */
-        Entity todoListEntity = new Entity("TodoList");
-        todoListEntity.setProperty("privateTodo", todoList.isPrivateTodo());
-        todoListEntity.setProperty("userId", request.getSession().getAttribute("userId"));
-        ds.put(todoListEntity);
-        /* retrieve todolist key */
-        Key todoListKey = KeyFactory.createKey("TodoList", todoListEntity.getKey().getId());
-        /* save row's entities */
-        for(int i = 0; i < todoList.getRows().size(); ++i) {
-            TodoListRow row = todoList.getRows().get(i);
-            Entity rowEntity = new Entity("TodoListRow");
-            rowEntity.setProperty("level", row.getLevel());
-            rowEntity.setProperty("category", row.getCategory());
-            rowEntity.setProperty("description", row.getDescription());
-            rowEntity.setProperty("completed", row.isCompleted());
-            rowEntity.setProperty("start", row.getStart());
-            rowEntity.setProperty("end", row.getEnd());
-            rowEntity.setProperty("todoListId", todoListKey);
-            ds.put(rowEntity);
-        }
-        return "add";
+
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public String successView() {
+        return "success";
     }
+
+
 }
 

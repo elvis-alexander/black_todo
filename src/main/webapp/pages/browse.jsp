@@ -23,8 +23,9 @@
                     </li>
                 </ul>
                 <ul class="right">
-                    <li class="active"><a href="browse.html" class="left">Browse lists</a></li>
-                    <li><a href="mylists.html" class="left">My lists</a></li>
+                    <li class="active"><a href="/todolist/browse" class="left">Browse Todo's</a></li>
+                    <li><a href="/todolist/mylists" class="left">My Todo's</a></li>
+                    <li><a href="/todolist/add" class="left">Create Todo</a></li>
                     <li>
                         <a href="#">
                             <i class="material-icons left">input</i>Logout

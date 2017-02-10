@@ -12,6 +12,7 @@ import java.util.ArrayList;
 @Entity
 public class TodoList {
     @Id public Long id;
+    public String name;
     public boolean privateTodo;
     public ArrayList<TodoListRow> rows = new ArrayList<>();
 
@@ -50,11 +51,22 @@ public class TodoList {
         this.rows = rows;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "TodoList{" +
-                "privateTodo=" + privateTodo +
-                ", rows=" + rows.toString() +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", privateTodo=" + privateTodo +
+                ", rows=" + rows +
                 '}';
     }
+
 }
