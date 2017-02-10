@@ -95,8 +95,6 @@ public class TodoListController {
         return "mylists";
     }
 
-
-
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddTodoList() {
         return "add";

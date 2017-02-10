@@ -29,7 +29,7 @@ function on_selected_row(row) {
         current_row = row;
     }
     reset_colors();
-    $(current_row).css('background-color', '#26a69a');
+    $(current_row).css('background-color', '#616161 ');
     // var cols = row.cells;s
     // var first_name = cols[0];
 }
@@ -82,7 +82,6 @@ function on_add_row(fn, ln) {
 /* handler for deleted row */
 function on_del_row() {
     current_row.remove();
-
 }
 
 /* handler to move row up */
@@ -125,31 +124,32 @@ function save_todolist() {
     $('#private_input').find('input').each(function() {
         todoList["privateTodo"] = this.checked ? true : false;
     });
+
+    $('#name_field').find('input').each(function() {
+        todoList['name'] = this.value;
+    });
+
     todoList['rows'] = [];
-    var level = 0;
     $('table > tbody  > tr').each(function() {
         var current_row = {};
         var cols = this.cells;
+        current_row['category'] = cols[0].innerHTML;
+        current_row['description'] = cols[1].innerHTML;
         var start_date = cols[2];
         var end_date = cols[3];
         var checkbox = cols[4];
-
-        /* set level,category and description */
-        current_row['level'] = level++;
-        current_row['category'] = cols[0].innerHTML;
-        current_row['description'] = cols[1].innerHTML;
-
-        /* set completed field */
-        $(checkbox).find('input').each(function() {
-            current_row['completed'] = this.checked ? true : false;
-        });
-        /* set start and end time */
         $(start_date).find('input').each(function() {
             current_row['start'] = this.value;
         });
+
         $(end_date).find('input').each(function() {
             current_row['end'] = this.value;
         });
+
+        $(checkbox).find('input').each(function() {
+            current_row['completed'] = this.checked ? true : false;
+        });
+
         todoList['rows'].push(current_row);
     });
 
@@ -160,8 +160,7 @@ function save_todolist() {
         data: JSON.stringify(todoList),
         success: function (msg) {
             //do something
-            console.log('success redirecting');
-            window.location = '/todolist/mylists';
+            console.log('success');
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);
