@@ -5,7 +5,6 @@ import com.google.appengine.repackaged.com.google.api.client.extensions.appengin
 import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.appengine.repackaged.com.google.api.client.json.jackson.JacksonFactory;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +28,6 @@ import java.util.Map;
 @RequestMapping("/todolist")
 public class TodoListController {
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
-    private static final Logger logger = Logger.getLogger(TodoList.class);
-
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public void signIn(HttpServletRequest request, @RequestParam("idtoken") String idTokenString, HttpServletResponse resp) throws Exception {
@@ -209,22 +206,9 @@ public class TodoListController {
                     rowEntity.setProperty("end", row.getEnd());
                     ds.put(rowEntity);
                 }
-                /*System.out.println("<>todoListEntity: " + todoListRowEntity);
-                TodoListRow row = todoList.getRows().get(rowIndex);
-                todoListRowEntity.setProperty("level", row.getLevel());
-                todoListRowEntity.setProperty("category", row.getCategory());
-                todoListRowEntity.setProperty("description", row.getDescription());
-                todoListRowEntity.setProperty("start", row.getStart());
-                todoListRowEntity.setProperty("end", row.getEnd());
-                todoListRowEntity.setProperty("completed", row.isCompleted());
-
-                ++rowIndex;
-                ds.put(todoListRowEntity);}*/
                 ds.put(todoListEntity);
             }
         }
-
-
         return "successedit";
     }
 
