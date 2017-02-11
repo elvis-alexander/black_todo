@@ -166,7 +166,64 @@ public class TodoListController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest req, @RequestBody TodoList todoList) {
         System.out.println("=>posting edit");
-        System.out.println(todoList.toString());
+        // work from here, start deleting all todolistrows with given id and add
+        String todoId = todoList.getId().toString().replace("(no-id-yet)", "");
+        System.out.println("todoList:" + todoId);
+        String userId = (String) req.getSession().getAttribute("userId");
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("TodoList");
+        query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
+        PreparedQuery preparedQuery = ds.prepare(query);
+        /* get all todolist from current user */
+        for (Entity todoListEntity : preparedQuery.asIterable()) {
+            Key todoListKey = todoListEntity.getKey();
+            System.out.println("todolistKey: " + todoListKey);
+            System.out.println("todolistKey: " + todoListKey.getId());
+            if(todoListKey.toString().equals(todoId)) {
+                System.out.println("+> found todoList!");
+                todoListEntity.setProperty("name", todoList.getName());
+                todoListEntity.setProperty("privateTodo", todoList.isPrivateTodo());
+                /*var curr_row = 0;
+                for(loop through all todoListRows with todoListId of bleh) {
+                    entityTodoListRow.setProperty("prop", todoList.foo());
+                    ++curr_row;
+                }                 */
+                query = new Query("TodoListRow");
+                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
+                preparedQuery = ds.prepare(query);
+                int rowIndex = 0;
+                for (Entity todoListRowEntity : preparedQuery.asIterable()) {
+                    ds.delete(todoListRowEntity.getKey());
+                }
+                /* save row's entities */
+                for(int i = 0; i < todoList.getRows().size(); ++i) {
+                    TodoListRow row;
+                    row = todoList.getRows().get(i);
+                    Entity rowEntity = new Entity("TodoListRow");
+                    rowEntity.setProperty("todoListId", todoListKey);
+                    rowEntity.setProperty("level", row.getLevel());
+                    rowEntity.setProperty("category", row.getCategory());
+                    rowEntity.setProperty("description", row.getDescription());
+                    rowEntity.setProperty("completed", row.isCompleted());
+                    rowEntity.setProperty("start", row.getStart());
+                    rowEntity.setProperty("end", row.getEnd());
+                    ds.put(rowEntity);
+                }
+                /*System.out.println("<>todoListEntity: " + todoListRowEntity);
+                TodoListRow row = todoList.getRows().get(rowIndex);
+                todoListRowEntity.setProperty("level", row.getLevel());
+                todoListRowEntity.setProperty("category", row.getCategory());
+                todoListRowEntity.setProperty("description", row.getDescription());
+                todoListRowEntity.setProperty("start", row.getStart());
+                todoListRowEntity.setProperty("end", row.getEnd());
+                todoListRowEntity.setProperty("completed", row.isCompleted());
+
+                ++rowIndex;
+                ds.put(todoListRowEntity);}*/
+                ds.put(todoListEntity);
+            }
+        }
+
 
         return "successedit";
     }

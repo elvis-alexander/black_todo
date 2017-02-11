@@ -51,7 +51,7 @@
                             <h6>Preview:</h6>
                             <ol>
                                 <c:forEach items="${currentTodo.rows}" var="curr_row">
-                                    <li><c:out value="${curr_row.description}"></c:out></li>
+                                    <li><c:out value="${curr_row.category}"></c:out></li>
                                 </c:forEach>
                             </ol>
                         </div>
