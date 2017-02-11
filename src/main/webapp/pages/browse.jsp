@@ -53,7 +53,7 @@
                                 </c:forEach>
                             </ol>
                         </div>
-                        <form action="/todolist/edit" method="get">
+                        <form action="/todolist/browseextended" method="get">
                             <div class="card-action">
                                 <input type="hidden" value="${currentTodo.id}" name="todoId">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">View (only) todo list

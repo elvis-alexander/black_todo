@@ -222,24 +222,59 @@ public class TodoListController {
         for (Entity todoListEntity : pq.asIterable()) {
             if (!userId.equals((String) todoListEntity.getProperties().get("userId"))) {
                 // display to user
-                TodoList currTodo = new TodoList();
-                currTodo.setName((String) todoListEntity.getProperties().get("name"));
-                currTodo.setId(todoListEntity.getKey());
-                // loop through every todolist
-                query = new Query("TodoListRow");
-                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListEntity.getKey()));
-                pq = ds.prepare(query);
-                for(Entity todoListRow : pq.asIterable()) {
-                    Map<String, Object> properties = todoListRow.getProperties();
-                    TodoListRow currRow = new TodoListRow();
-                    currRow.setCategory((String)properties.get("category"));
-                    currTodo.getRows().add(currRow);
+                if((Boolean)todoListEntity.getProperties().get("privateTodo") == false) {
+                    TodoList currTodo = new TodoList();
+                    currTodo.setName((String) todoListEntity.getProperties().get("name"));
+                    currTodo.setId(todoListEntity.getKey());
+                    // loop through every todolist
+                    query = new Query("TodoListRow");
+                    query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListEntity.getKey()));
+                    pq = ds.prepare(query);
+                    for(Entity todoListRow : pq.asIterable()) {
+                        Map<String, Object> properties = todoListRow.getProperties();
+                        TodoListRow currRow = new TodoListRow();
+                        currRow.setCategory((String)properties.get("category"));
+                        currTodo.getRows().add(currRow);
+                    }
+                    listOfTodos.add(currTodo);
                 }
-                listOfTodos.add(currTodo);
             }
         }
         model.addAttribute("todoList", listOfTodos);
         return "browse";
+    }
+
+    @RequestMapping(value = "/browseextended", method = RequestMethod.GET)
+    public String getBrowseExtended(HttpServletRequest request, Model model) {
+        String todoKey = request.getParameter("todoId");
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("TodoList");
+        PreparedQuery pq = ds.prepare(query);
+        for (Entity todoListEntity : pq.asIterable()) {
+            Key todoListKey = todoListEntity.getKey();
+            if (todoListKey.toString().equals(todoKey)) {
+                model.addAttribute("name", todoListEntity.getProperties().get("name"));
+                model.addAttribute("privateTodo", todoListEntity.getProperties().get("privateTodo"));
+                ArrayList<TodoListRow> rowArrayList = new ArrayList<>();
+                query = new Query("TodoListRow");
+                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
+                pq = ds.prepare(query);
+                for (Entity todoListRow : pq.asIterable()) {
+                    Map<String, Object> properties = todoListRow.getProperties();
+                    TodoListRow row = new TodoListRow();
+                    row.setLevel((Long) properties.get("level"));
+                    row.setCategory((String) properties.get("category"));
+                    row.setDescription((String) properties.get("description"));
+                    row.setCompleted((boolean) properties.get("completed"));
+                    row.setStart((Date) properties.get("start"));
+                    row.setEnd((Date) properties.get("end"));
+                    rowArrayList.add(row);
+                }
+                model.addAttribute("rows", rowArrayList);
+                return "browseextended";
+            }
+        }
+        return "browseextended";
     }
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
