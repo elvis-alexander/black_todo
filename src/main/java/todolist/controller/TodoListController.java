@@ -213,15 +213,37 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
-    public String browseView(HttpServletRequest request) {
+    public String browseView(HttpServletRequest request, Model model) {
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        String userId = (String) request.getSession().getAttribute("userId");
+        Query query = new Query("TodoList");
+        PreparedQuery pq = ds.prepare(query);
+        ArrayList<TodoList> listOfTodos = new ArrayList<>();
+        for (Entity todoListEntity : pq.asIterable()) {
+            if (!userId.equals((String) todoListEntity.getProperties().get("userId"))) {
+                // display to user
+                TodoList currTodo = new TodoList();
+                currTodo.setName((String) todoListEntity.getProperties().get("name"));
+                currTodo.setId(todoListEntity.getKey());
+                // loop through every todolist
+                query = new Query("TodoListRow");
+                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListEntity.getKey()));
+                pq = ds.prepare(query);
+                for(Entity todoListRow : pq.asIterable()) {
+                    Map<String, Object> properties = todoListRow.getProperties();
+                    TodoListRow currRow = new TodoListRow();
+                    currRow.setCategory((String)properties.get("category"));
+                    currTodo.getRows().add(currRow);
+                }
+                listOfTodos.add(currTodo);
+            }
+        }
+        model.addAttribute("todoList", listOfTodos);
         return "browse";
     }
-
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
     public String successView(HttpServletRequest request) {
         return "success";
     }
-
-
 }
