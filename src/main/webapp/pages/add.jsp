@@ -5,19 +5,20 @@
 
 <head>
     <title>Create a TodoList</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/resources/materialize/css/materialize.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/css/font.css">
+    <jsp:include page="templates/head.jsp"/>
     <link href="/resources/css/add.css" rel="stylesheet">
     <script src="/resources/js/add.js"></script>
-
     <%--my css/js--%>
     <csrf disabled="true"/>
-
 </head>
 <body>
+<script>
+    function onLoad() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init();
+        });
+    }
+</script>
 <div class="navbar-fixed z-depth-1">
     <nav>
         <div class="nav-wrapper light-blue accent-2">
@@ -34,7 +35,7 @@
                 <li><a href="/todolist/mylists" class="left">My Todo's</a></li>
                 <li class="active"><a href="/todolist/add" class="left">Create Todo</a></li>
                 <li>
-                    <a href="#">
+                    <a href="/" onclick="onLoad();signOut();">
                         <i class="material-icons left">input</i>Logout
                     </a>
                 </li>
@@ -127,5 +128,6 @@
         </div>
     </div>
 </div>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 </html>

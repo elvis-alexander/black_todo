@@ -2,14 +2,16 @@
 <html>
 <head>
     <title>Browse Lists</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/resources/materialize/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/font.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
-
+    <jsp:include page="templates/head.jsp"/>
 </head>
 <body class="grey lighten-4">
+<script>
+    function onLoad() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init();
+        });
+    }
+</script>
 <main>
     <div class="navbar-fixed z-depth-1">
         <nav>
@@ -27,7 +29,7 @@
                     <li><a href="/todolist/mylists" class="left">My Todo's</a></li>
                     <li><a href="/todolist/add" class="left">Create Todo</a></li>
                     <li>
-                        <a href="#">
+                        <a href="/" onclick="signOut()">
                             <i class="material-icons left">input</i>Logout
                         </a>
                     </li>
@@ -213,6 +215,7 @@
     </div>
 
     </div>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </main>
 </body>
 </html>
