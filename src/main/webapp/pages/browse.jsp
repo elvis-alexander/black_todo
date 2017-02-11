@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Browse Lists</title>
@@ -40,176 +41,31 @@
 
     <div class="container">
         <div class="row">
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">Plans for this month</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>buy food</li>
-                            <li>go to the gym</li>
-                            <li>get a job</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">The correct list</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>go to school</li>
-                            <li>print my hw</li>
-                            <li>do the hw</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">cse 308 plans</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>do todolist project</li>
-                            <li>get an A</li>
-                            <li>graduate</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
+            <c:forEach items="${todoList}" var="currentTodo">
+                <div class="col s4">
+                    <div class="card grey darken-2">
+                        <div class="card-content white-text">
+                            <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
+                            <div class="divider"></div>
+                            <h6>Preview:</h6>
+                            <ol>
+                                <c:forEach items="${currentTodo.rows}" var="curr_row">
+                                    <li><c:out value="${curr_row.category}"></c:out></li>
+                                </c:forEach>
+                            </ol>
+                        </div>
+                        <form action="/todolist/browseextended" method="get">
+                            <div class="card-action">
+                                <input type="hidden" value="${currentTodo.id}" name="todoId">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">View (only) todo list
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">Bill Pajamas</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>make a cake</li>
-                            <li>bake cookies</li>
-                            <li>go to basketball game</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">lumber man</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>cut down many trees</li>
-                            <li>sell a lot of wood</li>
-                            <li>replace old axe</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">the test</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>the first thing</li>
-                            <li>the second thing</li>
-                            <li>the third thing</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">water world plans</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>get a ton of water</li>
-                            <li>get a ton of slides</li>
-                            <li>get a ton of money</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">my todo list</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>this is my todo list</li>
-                            <li>it is public to everyone</li>
-                            <li>make this list private</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s4">
-                <div class="card grey darken-2">
-                    <div class="card-content white-text">
-                        <span class="text-medium">richard mckennas todo</span>
-                        <div class="divider"></div>
-                        <h6>Preview:</h6>
-                        <ol>
-                            <li>think about projects for 308</li>
-                            <li>think about projects for 219</li>
-                            <li>think about projects for 381</li>
-                            <li>...</li>
-                        </ol>
-                    </div>
-                    <div class="card-action">
-                        <a href="#" class="light-blue-text text-accent-2">View full todo list</a>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
 
         </div>
     </div>

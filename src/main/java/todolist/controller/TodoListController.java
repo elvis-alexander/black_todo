@@ -5,7 +5,6 @@ import com.google.appengine.repackaged.com.google.api.client.extensions.appengin
 import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.appengine.repackaged.com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.appengine.repackaged.com.google.api.client.json.jackson.JacksonFactory;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +28,6 @@ import java.util.Map;
 @RequestMapping("/todolist")
 public class TodoListController {
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
-    private static final Logger logger = Logger.getLogger(TodoList.class);
-
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public void signIn(HttpServletRequest request, @RequestParam("idtoken") String idTokenString, HttpServletResponse resp) throws Exception {
@@ -209,35 +206,79 @@ public class TodoListController {
                     rowEntity.setProperty("end", row.getEnd());
                     ds.put(rowEntity);
                 }
-                /*System.out.println("<>todoListEntity: " + todoListRowEntity);
-                TodoListRow row = todoList.getRows().get(rowIndex);
-                todoListRowEntity.setProperty("level", row.getLevel());
-                todoListRowEntity.setProperty("category", row.getCategory());
-                todoListRowEntity.setProperty("description", row.getDescription());
-                todoListRowEntity.setProperty("start", row.getStart());
-                todoListRowEntity.setProperty("end", row.getEnd());
-                todoListRowEntity.setProperty("completed", row.isCompleted());
-
-                ++rowIndex;
-                ds.put(todoListRowEntity);}*/
                 ds.put(todoListEntity);
             }
         }
-
-
         return "successedit";
     }
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
-    public String browseView(HttpServletRequest request) {
+    public String browseView(HttpServletRequest request, Model model) {
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        String userId = (String) request.getSession().getAttribute("userId");
+        Query query = new Query("TodoList");
+        PreparedQuery pq = ds.prepare(query);
+        ArrayList<TodoList> listOfTodos = new ArrayList<>();
+        for (Entity todoListEntity : pq.asIterable()) {
+            if (!userId.equals((String) todoListEntity.getProperties().get("userId"))) {
+                // display to user
+                if((Boolean)todoListEntity.getProperties().get("privateTodo") == false) {
+                    TodoList currTodo = new TodoList();
+                    currTodo.setName((String) todoListEntity.getProperties().get("name"));
+                    currTodo.setId(todoListEntity.getKey());
+                    // loop through every todolist
+                    query = new Query("TodoListRow");
+                    query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListEntity.getKey()));
+                    pq = ds.prepare(query);
+                    for(Entity todoListRow : pq.asIterable()) {
+                        Map<String, Object> properties = todoListRow.getProperties();
+                        TodoListRow currRow = new TodoListRow();
+                        currRow.setCategory((String)properties.get("category"));
+                        currTodo.getRows().add(currRow);
+                    }
+                    listOfTodos.add(currTodo);
+                }
+            }
+        }
+        model.addAttribute("todoList", listOfTodos);
         return "browse";
     }
 
+    @RequestMapping(value = "/browseextended", method = RequestMethod.GET)
+    public String getBrowseExtended(HttpServletRequest request, Model model) {
+        String todoKey = request.getParameter("todoId");
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("TodoList");
+        PreparedQuery pq = ds.prepare(query);
+        for (Entity todoListEntity : pq.asIterable()) {
+            Key todoListKey = todoListEntity.getKey();
+            if (todoListKey.toString().equals(todoKey)) {
+                model.addAttribute("name", todoListEntity.getProperties().get("name"));
+                model.addAttribute("privateTodo", todoListEntity.getProperties().get("privateTodo"));
+                ArrayList<TodoListRow> rowArrayList = new ArrayList<>();
+                query = new Query("TodoListRow");
+                query.setFilter(Query.FilterOperator.EQUAL.of("todoListId", todoListKey));
+                pq = ds.prepare(query);
+                for (Entity todoListRow : pq.asIterable()) {
+                    Map<String, Object> properties = todoListRow.getProperties();
+                    TodoListRow row = new TodoListRow();
+                    row.setLevel((Long) properties.get("level"));
+                    row.setCategory((String) properties.get("category"));
+                    row.setDescription((String) properties.get("description"));
+                    row.setCompleted((boolean) properties.get("completed"));
+                    row.setStart((Date) properties.get("start"));
+                    row.setEnd((Date) properties.get("end"));
+                    rowArrayList.add(row);
+                }
+                model.addAttribute("rows", rowArrayList);
+                return "browseextended";
+            }
+        }
+        return "browseextended";
+    }
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
     public String successView(HttpServletRequest request) {
         return "success";
     }
-
-
 }
