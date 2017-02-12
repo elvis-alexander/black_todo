@@ -35,11 +35,15 @@ public class TodoListController {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), jacksonFactory)
                 .setAudience(Collections.singletonList("525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com"))
                 .build();
+
         GoogleIdToken.Payload payload = verifier.verify(idTokenString).getPayload();
+
         String userId = payload.getSubject();
         /* set userId as session */
         HttpSession session = request.getSession();
         session.setAttribute("userId", userId);
+
+        System.out.println("SET USERID: " + userId + " session val: " + session.getAttribute("userId"));
 
         /* save to data store */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
@@ -49,13 +53,25 @@ public class TodoListController {
         ds.put(user);
     }
 
+    @RequestMapping(value = "/signout", method = RequestMethod.POST)
+    public void singOut(HttpServletRequest request) throws Exception {
+        request.getSession().removeAttribute("userId");
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddTodoList(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
         return "add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addTodoList(HttpServletRequest request, @RequestBody TodoList todoList) throws Exception {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
         /* retrieve datastore */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         /* save todolist entity */
@@ -85,7 +101,11 @@ public class TodoListController {
 
     @RequestMapping(value = "/mylists", method = RequestMethod.GET)
     public String myListsView(HttpServletRequest request, Model model) {
-        String userId = (String) request.getSession().getAttribute("userId");
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
+        String userId = (String) session.getAttribute("userId");
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
@@ -123,9 +143,13 @@ public class TodoListController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String getEditView(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
         // select todolist entity with given id to load name and privacy
         String todoKey = req.getParameter("todoId");
-        String userId = (String) req.getSession().getAttribute("userId");
+        String userId = (String) session.getAttribute("userId");
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
@@ -162,11 +186,15 @@ public class TodoListController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest req, @RequestBody TodoList todoList) {
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
         System.out.println("=>posting edit");
         // work from here, start deleting all todolistrows with given id and add
         String todoId = todoList.getId().toString().replace("(no-id-yet)", "");
         System.out.println("todoList:" + todoId);
-        String userId = (String) req.getSession().getAttribute("userId");
+        String userId = (String) session.getAttribute("userId");
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
         query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
@@ -214,8 +242,12 @@ public class TodoListController {
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
     public String browseView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-        String userId = (String) request.getSession().getAttribute("userId");
+        String userId = (String) session.getAttribute("userId");
         Query query = new Query("TodoList");
         PreparedQuery pq = ds.prepare(query);
         ArrayList<TodoList> listOfTodos = new ArrayList<>();
@@ -246,6 +278,10 @@ public class TodoListController {
 
     @RequestMapping(value = "/browseextended", method = RequestMethod.GET)
     public String getBrowseExtended(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId") == null)
+            return "index";
+
         String todoKey = request.getParameter("todoId");
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");

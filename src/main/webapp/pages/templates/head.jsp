@@ -20,4 +20,4 @@
 <script type="application/javascript" src="/resources/js/index.js"></script>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="450918861769-rjkidbca6j86tkgo4oisp4jhtu8p3i9t.apps.googleusercontent.com">
+<meta name="google-signin-client_id" content="525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com">
