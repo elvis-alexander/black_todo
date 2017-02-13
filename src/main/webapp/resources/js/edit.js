@@ -119,7 +119,6 @@ function move_down() {
 
 function filled_input_fields() {
     var allFilledIn = true;
-
     $('table > tbody  > tr').each(function() {
         var cols = this.cells;
         var start_date = cols[2];
@@ -127,11 +126,11 @@ function filled_input_fields() {
 
 
         $(start_date).find('input').each(function() {
-            if(this.value == '')
+            if(this.type == 'date' && this.value == '')
                 allFilledIn = false;
         });
         $(end_date).find('input').each(function() {
-            if(this.value == '')
+            if(this.type == 'date' && this.value == '')
                 allFilledIn = false;
         });
     });

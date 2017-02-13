@@ -140,11 +140,11 @@ function filled_input_fields() {
 }
 
 function save_todolist() {
-    if(!filled_input_fields()) {
-        $('#err_log').empty();
-        $('#err_log').append('Please fill in all date fields');
-        return;
-    }
+    // if(!filled_input_fields()) {
+    //     $('#err_log').empty();
+    //     $('#err_log').append('Please fill in all date fields');
+    //     return;
+    // }
 
     console.log('saving todo list');
     var todoList = {};
