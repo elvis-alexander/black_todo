@@ -28,16 +28,11 @@
                 </li>
             </ul>
             <ul class="right">
-                <li><a href="/todolist/browse" class="left">Browse Todo's</a></li>
-                <li><a href="/todolist/mylists" class="left">My Todo's</a></li>
-                <li><a href="/todolist/add" class="left">Create Todo</a></li>
-                <li>
-                    <a href="/" onclick="signOut()">
-                        <i class="material-icons left">input</i>Logout
-                    </a>
-                </li>
+                <li><a href="/list/public" class="left">Browse Todo's</a></li>
+                <li><a href="/list" class="left">My Todo's</a></li>
+                <li><a href="/add" class="left">Create Todo</a></li>
+                <li><a href="/" onclick="signOut()"><i class="material-icons left">input</i>Logout</a></li>
             </ul>
-
         </div>
     </nav>
 </div>

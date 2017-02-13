@@ -170,11 +170,11 @@ function save_todolist() {
     var request = $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/todolist/edit',
+        url: '/edit',
         data: JSON.stringify(todoList),
         success: function (msg) {
             console.log('success edited');
-            // window.location.href = '/todolist/success'
+            // window.location.href = '/success'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

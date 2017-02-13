@@ -1,0 +1,22 @@
+body {
+    background-color: #333333;
+    color: #eeeeee;
+}
+
+.padder{
+    padding-bottom: 1rem;
+}
+.top-nav-bar{
+    background-color: #D2FD00;
+    color: black;
+}
+
+.logo-todo{
+    background-color: #111111;
+}
+
+.error-message{
+    font-size: 1.4rem;
+    font-weight: 100;
+    color: white;
+}

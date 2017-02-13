@@ -17,7 +17,8 @@
 <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/font.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/main.css">
 <script type="application/javascript" src="/resources/js/index.js"></script>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="525024588682-7l84ocjn11k8t9j2n34hgaidieu9vtig.apps.googleusercontent.com">
+<meta name="google-signin-client_id" content="916429395024-fm59d90t7lukalhmia1s0o3f3gt4j9kf.apps.googleusercontent.com">

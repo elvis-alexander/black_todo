@@ -15,6 +15,8 @@ public class TodoList {
     public String name;
     public boolean privateTodo;
     public ArrayList<TodoListRow> rows = new ArrayList<>();
+    public String owner;
+    public @Id com.google.appengine.api.datastore.Key ownerId;
 
     public TodoList() {}
 
@@ -48,12 +50,26 @@ public class TodoList {
         this.name = name;
     }
 
+    public String getOwner() { return owner; }
+
+    public void setOwner(String owner) { this.owner = owner; }
+
+    public com.google.appengine.api.datastore.Key getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(com.google.appengine.api.datastore.Key ownerId) {
+        this.ownerId = ownerId;
+    }
+
     @Override
     public String toString() {
         return "TodoList{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", privateTodo=" + privateTodo +
+                ", owner=" + owner +
+                ", ownerId=" + ownerId +
                 ", rows=" + rows +
                 '}';
     }

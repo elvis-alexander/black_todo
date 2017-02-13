@@ -13,7 +13,8 @@ $(document).ready(function() {
 // resets all unslected colors
 function reset_colors() {
     $('tbody > tr').each(function() {
-        $(this).css('background-color', 'white');
+        $(this).css('background-color', '#333333');
+        $(this).css('color', '#ffffff');
     });
 }
 
@@ -29,7 +30,8 @@ function on_selected_row(row) {
         current_row = row;
     }
     reset_colors();
-    $(current_row).css('background-color', '#616161 ');
+    $(current_row).css('background-color', '#616161');
+    $(current_row).css('color', '#ffffff');
     // var cols = row.cells;s
     // var first_name = cols[0];
 }
@@ -121,12 +123,14 @@ function save() {
 function save_todolist() {
     console.log('saving todo list');
     var todoList = {};
-    $('#private_input').find('input').each(function() {
+    $('#private').find('input').each(function() {
         todoList["privateTodo"] = this.checked ? true : false;
+        console.log("Private todo input found");
     });
 
-    $('#name_field').find('input').each(function() {
+    $('#name').find('input').each(function() {
         todoList['name'] = this.value;
+        console.log("NAME FOUND:::" + todoList['name']);
     });
 
     todoList['rows'] = [];
@@ -156,12 +160,12 @@ function save_todolist() {
     var request = $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/todolist/add',
+        url: '/add',
         data: JSON.stringify(todoList),
         success: function (msg) {
             //do something
             console.log('success');
-            window.location.href = '/todolist/success'
+            window.location.href = '/success'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

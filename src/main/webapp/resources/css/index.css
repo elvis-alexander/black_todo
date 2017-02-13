@@ -1,7 +1,3 @@
-body {
-    background-color: #fcfcfc;
-}
-
 .center-div {
     position: absolute;
     margin: auto;
@@ -13,4 +9,20 @@ body {
     height: 350px;
     background-color: #616161;
     border-radius: 3px;
+}
+
+.todo-logo{
+    background-color: #d2fd00;
+}
+
+.main-message{
+    font-size: 1.80rem;
+    font-weight: 200;
+    color: white;
+}
+
+.login-message{
+    font-size: 1.1rem;
+    font-weight: 100;
+    color: white;
 }

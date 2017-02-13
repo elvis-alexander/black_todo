@@ -41,12 +41,12 @@
 
     <div class="container">
         <div class="row">
-
             <c:forEach items="${todoList}" var="currentTodo">
                 <div class="col s4">
                     <div class="card grey darken-2">
                         <div class="card-content white-text">
                             <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
+                                <%--<span class="text-medium">no name</span>--%>
                             <div class="divider"></div>
                             <h6>Preview:</h6>
                             <ol>
@@ -55,10 +55,10 @@
                                 </c:forEach>
                             </ol>
                         </div>
-                        <form action="/todolist/browseextended" method="get">
+                        <form action="/public/view" method="get">
                             <div class="card-action">
                                 <input type="hidden" value="${currentTodo.id}" name="todoId">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">View (only) todo list
+                                <button class="btn waves-effect waves-light" type="submit" name="action">View full todo list
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>
@@ -66,7 +66,6 @@
                     </div>
                 </div>
             </c:forEach>
-
         </div>
     </div>
 
