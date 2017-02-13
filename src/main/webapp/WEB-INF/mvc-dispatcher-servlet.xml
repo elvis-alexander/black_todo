@@ -15,8 +15,7 @@
                                 expression="todolist.controller.todolist.*" />
     </context:component-scan>
 
-    <bean
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/pages/</value>
         </property>
@@ -27,5 +26,5 @@
 
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/" />
-
+    <mvc:view-controller path="/" view-name="error"/>
 </beans>
