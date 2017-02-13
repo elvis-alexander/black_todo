@@ -317,4 +317,11 @@ public class TodoListController {
     public String successView(HttpServletRequest request) {
         return "success";
     }
+
+    @RequestMapping(value = "/successedit", method = RequestMethod.GET)
+    public String successEditView(HttpServletRequest request) {
+        return "successedit";
+    }
+
+
 }

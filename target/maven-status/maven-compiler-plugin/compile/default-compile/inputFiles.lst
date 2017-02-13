@@ -1,6 +1,7 @@
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/model/User.java
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/objectify/model/TodoListOfy.java
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/model/TodoListRow.java
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/model/TodoList.java
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/model/UserLogin.java
-/Users/kingfernandez/IdeaProjects/black_todo/src/main/java/todolist/controller/TodoListController.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/controller/MainPageController.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/model/TodoListRow.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/objectify/model/TodoListOfy.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/controller/TodoListController.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/model/UserLogin.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/model/TodoList.java
+/Users/kingfernandez/black_todo/src/main/java/todolist/model/User.java

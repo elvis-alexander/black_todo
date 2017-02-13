@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 function formatDate(d) {
     var today = new Date(d);
-    var dd = today.getDate();
+    var dd = today.getDate() + 1;
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
     if(dd<10){
@@ -50,18 +50,9 @@ function reset_colors() {
 /* handler for selected row */
 function on_selected_row(row) {
     console.log('selected');
-    if(row == null) {
-        current_row = $('table > tbody > tr');
-        $(current_row).click(function() {
-            on_selected_row(this)
-        });
-    } else {
-        current_row = row;
-    }
+    current_row = row;
     reset_colors();
-    $(current_row).css('background-color', '#616161 ');
-    // var cols = row.cells;s
-    // var first_name = cols[0];
+    $(current_row).css('background-color', '#616161');
 }
 
 /* new row added */
@@ -174,7 +165,7 @@ function save_todolist() {
         data: JSON.stringify(todoList),
         success: function (msg) {
             console.log('success edited');
-            // window.location.href = '/todolist/success'
+            window.location.href = '/todolist/successedit'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

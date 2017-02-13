@@ -45,7 +45,7 @@
             <h4>New Todo List</h4>
             <div class="input-field col s6" id="name_field">
                 <input id="id_field" type="hidden" value="${id}">
-                <input placeholder="Enter Name Here" type="text" id="name_field" value='<c:out value="${name}"></c:out>'>
+                <input placeholder="Enter Name Here" type="text" id="name_field" value='<c:out value="${name}"></c:out>' readonly>
                 <label for="name_field">TodoList Name</label>
             </div>
 
@@ -64,18 +64,7 @@
 
                             <div class="row">
                                 <div class="col s2"></div>
-                                <div class="col s6" id="private_input">
-                                    <c:choose>
-                                        <c:when test="${privateTodo == false}">
-                                            <input type="checkbox" id="private" />
-                                            <label for="private">Mark As Private</label>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" id="private" checked/>
-                                            <label for="private">Mark As Private</label>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
+                                <div class="col s6"></div>
 
                                 <div class="col s4">
                                 </div>
@@ -102,26 +91,29 @@
                         <c:forEach items="${rows}" var="currRow">
 
                             <tr >
-                                <td align="center" contenteditable='true'><c:out value="${currRow.category}"></c:out></td>
-                                <td align="center" contenteditable='true'><c:out value="${currRow.description}"></c:out></td>
+                                <td align="center" contenteditable='false'><c:out value="${currRow.category}"></c:out></td>
+                                <td align="center" contenteditable='false'><c:out value="${currRow.description}"></c:out></td>
 
                                 <td>
                                     <input type="hidden" value="${currRow.start}">
-                                    <input type="date" value="">
+                                    <input type="date" value="" readonly>
                                 </td>
                                 <td>
                                     <input type="hidden" value="${currRow.end}">
-                                    <input type="date" value="">
+                                    <input type="date" value="" readonly>
                                 </td>
                                 <td>
-                                    <div class="switch">
-                                        <label>
-                                            Off
-                                            <input type="checkbox">
-                                            <span class="lever"></span>
-                                            On
-                                        </label>
-                                    </div>
+
+                                    <c:choose>
+                                        <c:when test="${currRow.completed == true}">
+                                            <h6>Completed</h6>
+                                        </c:when>
+                                        <c:when test="${currRow.completed == false}">
+                                            <h6>Not Completed</h6>
+                                        </c:when>
+                                    </c:choose>
+
+
                                 </td>
                             </tr>
 
