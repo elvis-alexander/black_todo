@@ -1,6 +1,6 @@
+todolist/objectify/model/TodoListOfy.class
 todolist/model/TodoListRow.class
 todolist/model/UserLogin.class
 todolist/controller/TodoListController.class
-todolist/objectify/model/TodoListOfy.class
 todolist/model/TodoList.class
 todolist/model/User.class

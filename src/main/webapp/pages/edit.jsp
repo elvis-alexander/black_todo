@@ -59,6 +59,8 @@
             <input id="id_field" type="hidden" value="${id}">
             <input placeholder="Enter Name Here" type="text" id="name_field" value='<c:out value="${name}"></c:out>'>
             <label for="name_field">TodoList Name</label>
+            <div id="err_log">
+            </div>
         </div>
 
         <div class="col s1"></div>
@@ -118,7 +120,7 @@
                     <tbody>
                         <c:forEach items="${rows}" var="currRow">
 
-                            <tr >
+                            <tr onclick="on_selected_row(this)">
                                 <td align="center" contenteditable='true'><c:out value="${currRow.category}"></c:out></td>
                                 <td align="center" contenteditable='true'><c:out value="${currRow.description}"></c:out></td>
 
@@ -131,14 +133,33 @@
                                     <input type="date" value="">
                                 </td>
                                 <td>
-                                    <div class="switch">
-                                        <label>
-                                            Off
-                                            <input type="checkbox">
-                                            <span class="lever"></span>
-                                            On
-                                        </label>
-                                    </div>
+
+                                    <c:choose>
+                                        <c:when test="${currRow.completed == true}">
+
+                                            <div class="switch">
+                                                <label>
+                                                    Off
+                                                    <input checked type="checkbox">
+                                                    <span class="lever"></span>
+                                                    On
+                                                </label>
+                                            </div>
+
+                                        </c:when>
+                                        <c:when test="${currRow.completed == false}">
+
+                                            <div class="switch">
+                                                <label>
+                                                    Off
+                                                    <input type="checkbox">
+                                                    <span class="lever"></span>
+                                                    On
+                                                </label>
+                                            </div>
+
+                                        </c:when>
+                                    </c:choose>
                                 </td>
                             </tr>
 
