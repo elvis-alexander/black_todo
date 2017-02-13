@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/font.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
+    <script src="/resources/js/browseextended.js"></script>
 
 </head>
 <body class="grey lighten-4">
@@ -42,7 +43,7 @@
         <div class="row">
 
 
-            <h4>New Todo List</h4>
+            <h4>Owner Name: <c:out value="${ownerName}"></c:out></h4>
             <div class="input-field col s6" id="name_field">
                 <input id="id_field" type="hidden" value="${id}">
                 <input placeholder="Enter Name Here" type="text" id="name_field" value='<c:out value="${name}"></c:out>' readonly>

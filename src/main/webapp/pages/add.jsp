@@ -55,6 +55,8 @@
         <div class="input-field col s6" id="name_field">
             <input placeholder="Enter Name Here" type="text" id="name_field">
             <label for="name_field">TodoList Name</label>
+            <div id="err_log">
+            </div>
         </div>
 
         <div class="col s1"></div>

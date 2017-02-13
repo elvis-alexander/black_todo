@@ -59,6 +59,8 @@
             <input id="id_field" type="hidden" value="${id}">
             <input placeholder="Enter Name Here" type="text" id="name_field" value='<c:out value="${name}"></c:out>'>
             <label for="name_field">TodoList Name</label>
+            <div id="err_log">
+            </div>
         </div>
 
         <div class="col s1"></div>

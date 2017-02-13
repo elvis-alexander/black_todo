@@ -117,9 +117,38 @@ function move_down() {
     jQuery(current_row).next().after(jQuery(current_row));
 }
 
+function filled_input_fields() {
+    var allFilledIn = true;
 
+    $('table > tbody  > tr').each(function() {
+        var cols = this.cells;
+        var start_date = cols[2];
+        var end_date = cols[3];
+
+
+        $(start_date).find('input').each(function() {
+            if(this.value == '')
+                allFilledIn = false;
+        });
+        $(end_date).find('input').each(function() {
+            if(this.value == '')
+                allFilledIn = false;
+        });
+    });
+
+    return allFilledIn;
+
+}
 
 function save_todolist() {
+
+    if(!filled_input_fields()) {
+        $('#err_log').empty();
+        $('#err_log').append('Please fill in all date fields');
+        return;
+    }
+
+
     console.log('saving todo list');
     var todoList = {};
     $('#private_input').find('input').each(function() {

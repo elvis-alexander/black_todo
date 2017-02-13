@@ -46,7 +46,8 @@
                 <div class="col s4">
                     <div class="card grey darken-2">
                         <div class="card-content white-text">
-                            <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
+                            <span class="text-medium">Owner: <c:out value="${currentTodo.ownerName}"></c:out></span><br>
+                            <span class="text-medium">Name: <c:out value="${currentTodo.name}"></c:out></span>
                             <div class="divider"></div>
                             <h6>Preview:</h6>
                             <ol>
@@ -58,6 +59,7 @@
                         <form action="/todolist/browseextended" method="get">
                             <div class="card-action">
                                 <input type="hidden" value="${currentTodo.id}" name="todoId">
+                                <input type="hidden" value="${currentTodo.ownerName}" name="ownerName">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">View (only) todo list
                                     <i class="material-icons right">send</i>
                                 </button>

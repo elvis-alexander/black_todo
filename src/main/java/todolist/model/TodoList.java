@@ -15,6 +15,7 @@ public class TodoList {
     public String name;
     public boolean privateTodo;
     public ArrayList<TodoListRow> rows = new ArrayList<>();
+    public String ownerName;
 
     public TodoList() {}
 
@@ -46,6 +47,14 @@ public class TodoList {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     @Override

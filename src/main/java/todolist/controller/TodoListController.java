@@ -268,6 +268,17 @@ public class TodoListController {
                         currRow.setCategory((String)properties.get("category"));
                         currTodo.getRows().add(currRow);
                     }
+
+                    Query userNameQuery = new Query("User");
+                    PreparedQuery userNamePQ = ds.prepare(userNameQuery);
+                    currTodo.ownerName = "default";
+                    for(Entity userEntity : userNamePQ.asIterable()) {
+                        String user = userEntity.getKey().toString().replace("User(\"", "").replace("\")","");
+                        if(user.equals(todoListEntity.getProperties().get("userId"))) {
+                            currTodo.ownerName = (String) userEntity.getProperties().get("firstName");
+                            break;
+                        }
+                    }
                     listOfTodos.add(currTodo);
                 }
             }
@@ -289,6 +300,8 @@ public class TodoListController {
         for (Entity todoListEntity : pq.asIterable()) {
             Key todoListKey = todoListEntity.getKey();
             if (todoListKey.toString().equals(todoKey)) {
+
+                model.addAttribute("ownerName", (String)request.getParameter("ownerName"));
                 model.addAttribute("name", todoListEntity.getProperties().get("name"));
                 model.addAttribute("privateTodo", todoListEntity.getProperties().get("privateTodo"));
                 ArrayList<TodoListRow> rowArrayList = new ArrayList<>();

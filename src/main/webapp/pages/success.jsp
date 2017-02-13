@@ -45,7 +45,7 @@
 
 <div class="container">
     <div class="row">
-        <h1>Successfully Added/Edited TodoList</h1>
+        <h1>Successfully Added TodoList</h1>
     </div>
 </div>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
