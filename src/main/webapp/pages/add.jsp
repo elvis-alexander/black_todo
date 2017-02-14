@@ -37,9 +37,9 @@
         <h4>New Todo List</h4>
         <div class="padder"></div>
         <div class="row">
-            <div class="col s6" id="name_input">
-                <input placeholder="Enter Name Here" type="text" id="name">
-                <label for="name">TodoList Name</label>
+            <div class="col s6" id="name_field">
+                <input placeholder="Enter Name Here" type="text" id="name_input">
+                <label for="name_input">TodoList Name</label>
             </div>
             <div class="col s4" id="private_input">
                 <input type="checkbox" id="private" />
@@ -51,10 +51,10 @@
         </div>
         <div class="padder"></div>
         <div class="row">
-            <button type="button" class="waves-effect waves-light btn light-green accent-1" onclick="on_add_row('new category', 'new description')">Add Row</button>
-            <button type="button" class="waves-effect waves-light btn light-green accent-1" onclick="on_del_row()">Delete Row</button>
-            <button type="button" class="waves-effect waves-light btn light-green accent-1" onclick="move_up()">Move Up</button>
-            <button type="button" class="waves-effect waves-light btn light-green accent-1" onclick="move_down()">Move Down</button>
+            <button type="button" class="waves-effect waves-light btn light-green accent-1 text-black" onclick="on_add_row('new category', 'new description')">Add Row</button>
+            <button type="button" class="waves-effect waves-light btn light-green accent-1 text-black" onclick="on_del_row()">Delete Row</button>
+            <button type="button" class="waves-effect waves-light btn light-green accent-1 text-black" onclick="move_up()">Move Up</button>
+            <button type="button" class="waves-effect waves-light btn light-green accent-1 text-black" onclick="move_down()">Move Down</button>
         </div>
         <div class="padder"></div>
         <div class="row" id="tbl_container">

@@ -34,45 +34,45 @@
     <div class="container">
         <div class="row">
             <c:forEach items="${todoList}" var="currentTodo">
-                <div class="col s4">
-                    <c:choose>
-                        <c:when test="${not currentTodo.privateTodo}">
-                        <div class="card white">
-                            <div class="card-content black-text">
+            <div class="col s4">
+                <c:choose>
+                <c:when test="${not currentTodo.privateTodo}">
+                <div class="card white">
+                    <div class="card-content black-text">
                         </c:when>
                         <c:otherwise>
                         <div class="card grey darken-2">
                             <div class="card-content white-text">
-                        </c:otherwise>
-                    </c:choose>
-                            <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
-                            <c:choose>
-                                <c:when test="${not currentTodo.privateTodo}">
-                                    <i class="material-icons right small">supervisor_account</i>
-                                </c:when>
-                                <c:otherwise>
-                                    <i class="material-icons right small">lock</i>
                                 </c:otherwise>
-                            </c:choose>
-                            <%--<span class="text-medium">no name</span>--%>
-                            <div class="divider"></div>
-                            <h6>Preview:</h6>
-                            <ol>
-                                <c:forEach items="${currentTodo.rows}" var="curr_row">
-                                    <li><c:out value="${curr_row.category}"></c:out></li>
-                                </c:forEach>
-                            </ol>
-                        </div>
-                        <div class="card-action">
-                            <a class="btn waves-effect waves-light" href="view/${currentTodo.id}">View/Edit full todo list
-                                <i class="material-icons right">send</i>
-                            </a>
+                                </c:choose>
+                                <span class="text-medium"><c:out value="${currentTodo.name}"></c:out></span>
+                                <c:choose>
+                                    <c:when test="${not currentTodo.privateTodo}">
+                                        <i class="material-icons right small">supervisor_account</i>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <i class="material-icons right small">lock</i>
+                                    </c:otherwise>
+                                </c:choose>
+                                    <%--<span class="text-medium">no name</span>--%>
+                                <div class="divider"></div>
+                                <h6>Preview:</h6>
+                                <ol>
+                                    <c:forEach items="${currentTodo.rows}" var="curr_row">
+                                        <li><c:out value="${curr_row.category}"></c:out></li>
+                                    </c:forEach>
+                                </ol>
+                            </div>
+                            <div class="card-action">
+                                <a class="btn waves-effect waves-light" href="edit/${currentTodo.id}">View/Edit full todo list
+                                    <i class="material-icons right">send</i>
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
-        </div>
-    </div>
+            </div>
 </main>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>

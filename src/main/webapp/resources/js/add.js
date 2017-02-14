@@ -140,6 +140,9 @@ function filled_input_fields() {
     return allFilledIn;
 
 }
+function remove_todolist() {
+    console.log("Remove!");
+}
 
 function save_todolist() {
     if(!filled_input_fields()) {
@@ -150,14 +153,12 @@ function save_todolist() {
 
     console.log('saving todo list');
     var todoList = {};
-    $('#private').find('input').each(function() {
+    $('#private_input').find('input').each(function() {
         todoList["privateTodo"] = this.checked ? true : false;
-        console.log("Private todo input found");
     });
 
-    $('#name').find('input').each(function() {
-        todoList['name'] = this.value;
-        console.log("NAME FOUND:::" + todoList['name']);
+    $('#name_field').find('input').each(function() {
+        todoList["name"] = this.value;
     });
 
     todoList['rows'] = [];
@@ -180,7 +181,6 @@ function save_todolist() {
         $(checkbox).find('input').each(function() {
             current_row['completed'] = this.checked ? true : false;
         });
-
         todoList['rows'].push(current_row);
     });
 
@@ -192,7 +192,7 @@ function save_todolist() {
         success: function (msg) {
             //do something
             console.log('success');
-            window.location.href = '/success'
+            window.location.href = '/list'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

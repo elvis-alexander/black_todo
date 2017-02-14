@@ -3,6 +3,7 @@ package todolist.model;
 import com.google.appengine.repackaged.com.google.api.client.util.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -14,11 +15,13 @@ import java.util.Date;
 @Entity
 public class TodoListRow {
     @Key @Id private Long id;
-    public Long level;
+    public long level;
     public String category;
     public String description;
     public boolean completed;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date start;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date end;
     public com.google.appengine.api.datastore.Key todoListId;
 
@@ -34,11 +37,11 @@ public class TodoListRow {
         this.id = id;
     }
 
-    public Long getLevel() {
+    public long getLevel() {
         return level;
     }
 
-    public void setLevel(Long level) {
+    public void setLevel(long level) {
         this.level = level;
     }
 
@@ -66,18 +69,20 @@ public class TodoListRow {
         this.completed = completed;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getStart() {
         return start;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void setStart(Date start) {
         this.start = start;
     }
 
-    public Date getEnd() {
-        return end;
-    }
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date getEnd() { return end; }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void setEnd(Date end) {
         this.end = end;
     }

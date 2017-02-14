@@ -19,15 +19,19 @@ $(document).ready(function() {
 
 function formatDate(d) {
     var today = new Date(d);
-    var dd = today.getDate() + 1;
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    }
-    if(mm<10){
-        mm='0'+mm;
-    }
-    var today = yyyy+'-'+mm+'-'+dd;
-    return today;
+    var mm = today.getMonth() + 1;
+    return today.getFullYear() + "-" + mm + "-" + today.getDate();
+    /*
+     var dd = today.getDate() + 1;
+     var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10){
+     dd='0'+dd;
+     }
+     if(mm<10){
+     mm='0'+mm;
+     }
+     var today = yyyy+'-'+mm+'-'+dd;
+     return today;
+     */
 }

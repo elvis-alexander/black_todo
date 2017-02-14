@@ -21,4 +21,4 @@
 <script type="application/javascript" src="/resources/js/index.js"></script>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="916429395024-fm59d90t7lukalhmia1s0o3f3gt4j9kf.apps.googleusercontent.com">
+<meta name="google-signin-client_id" content="389959298924-dr331r7s8m681dr2h5n3p7vg6ju1kkk2.apps.googleusercontent.com">

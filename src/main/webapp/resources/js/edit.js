@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 function formatDate(d) {
     var today = new Date(d);
-    var dd = today.getDate();
+    var dd = today.getDate() + 1;
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
     if(dd<10){
@@ -43,25 +43,18 @@ function formatDate(d) {
 // resets all unslected colors
 function reset_colors() {
     $('tbody > tr').each(function() {
-        $(this).css('background-color', 'white');
+        $(this).css('background-color', '#333333');
+        $(this).css('color', '#ffffff');
     });
 }
 
 /* handler for selected row */
 function on_selected_row(row) {
     console.log('selected');
-    if(row == null) {
-        current_row = $('table > tbody > tr');
-        $(current_row).click(function() {
-            on_selected_row(this)
-        });
-    } else {
-        current_row = row;
-    }
+    current_row = row;
     reset_colors();
-    $(current_row).css('background-color', '#616161 ');
-    // var cols = row.cells;s
-    // var first_name = cols[0];
+    $(current_row).css('background-color', '#616161');
+    $(current_row).css('color', '#ffffff');
 }
 
 /* new row added */
@@ -126,9 +119,36 @@ function move_down() {
     jQuery(current_row).next().after(jQuery(current_row));
 }
 
+function filled_input_fields() {
+    var allFilledIn = true;
+    $('table > tbody  > tr').each(function() {
+        var cols = this.cells;
+        var start_date = cols[2];
+        var end_date = cols[3];
 
 
-function save_todolist() {
+        $(start_date).find('input').each(function() {
+            if(this.type == 'date' && this.value == '')
+                allFilledIn = false;
+        });
+        $(end_date).find('input').each(function() {
+            if(this.type == 'date' && this.value == '')
+                allFilledIn = false;
+        });
+    });
+
+    return allFilledIn;
+
+}
+
+function save_todolist(id) {
+
+    if(!filled_input_fields()) {
+        $('#err_log').empty();
+        $('#err_log').append('Please fill in all date fields');
+        return;
+    }
+
     console.log('saving todo list');
     var todoList = {};
     $('#private_input').find('input').each(function() {
@@ -140,14 +160,17 @@ function save_todolist() {
     });
 
     todoList['rows'] = [];
+
     $('table > tbody  > tr').each(function() {
         var current_row = {};
         var cols = this.cells;
         current_row['category'] = cols[0].innerHTML;
         current_row['description'] = cols[1].innerHTML;
+
         var start_date = cols[2];
         var end_date = cols[3];
         var checkbox = cols[4];
+
         $(start_date).find('input').each(function() {
             current_row['start'] = this.value;
         });
@@ -163,9 +186,7 @@ function save_todolist() {
         todoList['rows'].push(current_row);
     });
 
-    $('#id_field').each(function () {
-        todoList['id'] = this.value;
-    });
+    todoList['id'] = id;
 
     var request = $.ajax({
         type: "POST",
@@ -174,7 +195,7 @@ function save_todolist() {
         data: JSON.stringify(todoList),
         success: function (msg) {
             console.log('success edited');
-            // window.location.href = '/success'
+            window.location.href = '/successedit'
         },
         error: function (errormessage) {
             console.log('ajax failure' + errormessage);

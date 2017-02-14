@@ -9,7 +9,6 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
     <script src="/resources/js/browseextended.js"></script>
-
 </head>
 <body class="grey lighten-4">
 <main>
@@ -125,5 +124,6 @@
             </div>
         </div>
     </div>
+</main>
 </body>
 </html>
