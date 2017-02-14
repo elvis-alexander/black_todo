@@ -35,7 +35,7 @@ public class TodoListController {
     public void signIn(HttpServletRequest request, @RequestParam("idtoken") String idTokenString, HttpServletResponse resp) throws Exception {
         // signing user in
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), jacksonFactory)
-                .setAudience(Collections.singletonList("389959298924-dr331r7s8m681dr2h5n3p7vg6ju1kkk2.apps.googleusercontent.com"))
+                .setAudience(Collections.singletonList("916429395024-fm59d90t7lukalhmia1s0o3f3gt4j9kf.apps.googleusercontent.com"))
                 .build();
 
         GoogleIdToken.Payload payload = verifier.verify(idTokenString).getPayload();
@@ -116,27 +116,21 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String postEdit(HttpServletRequest req, @RequestBody TodoList todoList) {
-        HttpSession session = req.getSession();
+    public String postEdit(HttpServletRequest request, @RequestBody TodoList todoList) {
+        HttpSession session = request.getSession();
         if(session.getAttribute("userId") == null)
             return "index";
 
-        System.out.println("=>posting edit");
-        // work from here, start deleting all todolistrows with given id and add
         String todoId = todoList.getId().toString().replace("(no-id-yet)", "");
-        System.out.println("todoList:" + todoId);
         String userId = (String) session.getAttribute("userId");
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("TodoList");
-        query.setFilter(Query.FilterOperator.EQUAL.of("userId", userId));
+        query.setFilter(Query.FilterOperator.EQUAL.of("ownerId", userId));
         PreparedQuery preparedQuery = ds.prepare(query);
         /* get all todolist from current user */
         for (Entity todoListEntity : preparedQuery.asIterable()) {
             Key todoListKey = todoListEntity.getKey();
-            System.out.println("todolistKey: " + todoListKey);
-            System.out.println("todolistKey: " + todoListKey.getId());
             if(todoListKey.toString().equals(todoId)) {
-                System.out.println("+> found todoList!");
                 todoListEntity.setProperty("name", todoList.getName());
                 todoListEntity.setProperty("privateTodo", todoList.isPrivateTodo());
                 /*var curr_row = 0;
