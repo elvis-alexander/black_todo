@@ -12,9 +12,7 @@ import todolist.model.TodoListRow;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Chaeyoung
@@ -92,6 +90,7 @@ public class ListViewController {
                         currRow.setCategory((String)properties.get("category"));
                         currTodo.getRows().add(currRow);
                     }
+                    Collections.sort(currTodo.getRows(), new TodoListRow.CompLevel());
                     listOfTodos.add(currTodo);
                 }
             }
