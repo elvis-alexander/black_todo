@@ -35,7 +35,7 @@ public class TodoListController {
     public void signIn(HttpServletRequest request, @RequestParam("idtoken") String idTokenString, HttpServletResponse resp) throws Exception {
         // signing user in
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), jacksonFactory)
-                .setAudience(Collections.singletonList("916429395024-fm59d90t7lukalhmia1s0o3f3gt4j9kf.apps.googleusercontent.com"))
+                .setAudience(Collections.singletonList("371812665163-qsu7jo30jpvvv30afqnbtj7a3srb38oh.apps.googleusercontent.com"))
                 .build();
 
         GoogleIdToken.Payload payload = verifier.verify(idTokenString).getPayload();

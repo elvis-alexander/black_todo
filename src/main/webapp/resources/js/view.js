@@ -26,18 +26,9 @@ $(document).ready(function() {
 
 function formatDate(d) {
     var today = new Date(d);
-    today++;
-    var dd = today.getDate() + 1;
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    }
-    if(mm<10){
-        mm='0'+mm;
-    }
-    var today = yyyy+'-'+mm+'-'+dd;
-    return today;
+    today.setDate(today.getDate() + 1);
+    var mm = today.getMonth() + 1;
+    return today.getFullYear() + "-" + mm + "-" + today.getDate();
 }
 
 

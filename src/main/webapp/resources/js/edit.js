@@ -26,17 +26,9 @@ $(document).ready(function() {
 
 function formatDate(d) {
     var today = new Date(d);
-    var dd = today.getDate() + 1;
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    }
-    if(mm<10){
-        mm='0'+mm;
-    }
-    var today = yyyy+'-'+mm+'-'+dd;
-    return today;
+    today.setDate(today.getDate() + 1);
+    var mm = today.getMonth() + 1;
+    return today.getFullYear() + "-" + mm + "-" + today.getDate();
 }
 
 
@@ -158,7 +150,7 @@ function save_todolist(id) {
     $('#name_field').find('input').each(function() {
         todoList['name'] = this.value;
     });
-
+    todoList['id'] = id;
     todoList['rows'] = [];
 
     $('table > tbody  > tr').each(function() {
@@ -186,12 +178,10 @@ function save_todolist(id) {
         todoList['rows'].push(current_row);
     });
 
-    todoList['id'] = id;
-
     var request = $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/edit',
+        url: '/edit/',
         data: JSON.stringify(todoList),
         success: function (msg) {
             console.log('success edited');

@@ -17,21 +17,11 @@ $(document).ready(function() {
 });
 
 
+// Because of the time zone, the date is always a day later than the given input date.
+// Therefore, just adding one more day from current for quick patch.
 function formatDate(d) {
     var today = new Date(d);
+    today.setDate(today.getDate() + 1);
     var mm = today.getMonth() + 1;
     return today.getFullYear() + "-" + mm + "-" + today.getDate();
-    /*
-     var dd = today.getDate() + 1;
-     var mm = today.getMonth()+1; //January is 0!
-     var yyyy = today.getFullYear();
-     if(dd<10){
-     dd='0'+dd;
-     }
-     if(mm<10){
-     mm='0'+mm;
-     }
-     var today = yyyy+'-'+mm+'-'+dd;
-     return today;
-     */
 }

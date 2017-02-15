@@ -16,12 +16,8 @@
         <nav>
             <div class="nav-wrapper light-blue accent-2">
                 <ul class="left">
-                    <li>
-                        <a class="grey lighten-2 text-large text-logo text-black" href="#">BLACK</a>
-                    </li>
-                    <li>
-                        <a class="grey darken-3 text-large text-logo text-white">TODO</a>
-                    </li>
+                    <li><a class="grey lighten-2 text-large text-logo text-black" href="#">BLACK</a>
+                        <a class="grey darken-3 text-large text-logo text-white">TODO</a></li>
                 </ul>
                 <ul class="right">
                     <li class="active"><a href="/todolist/browse" class="left">Browse Todo's</a></li>
