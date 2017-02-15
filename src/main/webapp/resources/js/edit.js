@@ -194,11 +194,6 @@ function save_todolist(id) {
     console.log('todoList ' + JSON.stringify(todoList));
 }
 
-
-
-
-
-
-
-
-
+function sort_table(column){
+    console.log("sort_table");
+}

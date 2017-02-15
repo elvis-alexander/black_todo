@@ -75,11 +75,11 @@
                 <table class="table">
                     <thead>
                     <tr class="info">
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Completed</th>
+                        <th onclick="sort_table('category')">Category</th>
+                        <th onclick="sort_table('description')">Description</th>
+                        <th onclick="sort_table('start')">Start Date</th>
+                        <th onclick="sort_table('end')">End Date</th>
+                        <th onclick="sort_table('completed')">Completed</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.DateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -108,6 +109,14 @@ public class TodoListRow {
                 ", todoListId=" + todoListId +
                 '}';
     }
+
+    public static class CompLevel implements Comparator<TodoListRow> {
+        @Override
+        public int compare(TodoListRow o1, TodoListRow o2) {
+            return (int)o2.getLevel() - (int)o1.getLevel();
+        }
+    }
+
 
 }
 
